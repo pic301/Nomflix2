@@ -15,15 +15,15 @@ loading ? (
   <Container>
   {nowPlaying && nowPlaying.length > 0 && 
     <Section title="Now Playing">
-    {nowPlaying.map(movie =>movie.title)}</Section>}
+    {nowPlaying.map(movie =><span key={movie.id}>{movie.title}</span>)}</Section>}
 
      {upcoming && upcoming.length > 0 && 
     <Section title="Upcoming Movies">
-    {upcoming.map(movie =>movie.title)}</Section>}
+    {upcoming.map(movie =><span key={movie.id}>{movie.title}</span>)}</Section>}
     
     {popular && popular.length > 0 && 
     <Section title="Popular Movies">
-    {popular.map(movie =>movie.title)}</Section>}
+    {popular.map(movie =><span key={movie.id}>{movie.title}</span>)}</Section>}
 
   
 </Container>)
