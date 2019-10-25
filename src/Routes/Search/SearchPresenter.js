@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import Loader from 'Components/Loader'
 import Section from 'Components/Section'
+import Message from "../../Components/Message"
 
 const Container = styled.div`
 padding: 0px 20px;
@@ -45,12 +46,19 @@ const SearchPresenter = ({
               <span key={movie.id}>{movie.title} </span>
             ))}
           </Section>}
-          {tvResults && tvResults.length > 0 &&
+        {tvResults && tvResults.length > 0 &&
           <Section title='Movie Results'>
             {tvResults.map(show => (
               <span key={show.id}>{show.name} </span>
             ))}
           </Section>}
+        {error && <Message color="#e74c3c" text={error} />}
+        {tvResults && 
+        movieResults && 
+        tvResults.length === 0 && 
+        movieResults.length === 0 &&( 
+        <Message text='Nothing found' color='#95a5a6'/>
+        )}
       </>}
   </Container>
 //로더는 로딩이 멈췄을때 무비리절트로 갈꺼고 렝스의 길이가 0이상이면 섹션타이틀로가고
