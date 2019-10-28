@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import Helmet from 'react-helmet'
-import Loader from "Components/Loader"
+import Helmet from "react-helmet";
+import Loader from "Components/Loader";
+import Tabs from 'Components/Tabs';
 
 const Container = styled.div`
   height:calc(100vh - 50px);
@@ -32,6 +33,8 @@ const Content = styled.div`
   height: 100%;
   
   `;
+
+
 const Cover = styled.div`
   width: 30%; 
   background-image: url(${props => props.bgImage});
@@ -46,11 +49,11 @@ const Data = styled.div`
   margin-left:10px;
 
 `;
-const Title= styled.h3`
+const Title = styled.h3`
  font-size:32px;
  margin-bottom:20px;
 `;
-const ItemContainer=styled.div`
+const ItemContainer = styled.div`
 margin : 20px 0;
 `;
 const Item = styled.span`
@@ -60,28 +63,54 @@ const Divider = styled.span`
 margin:0 10px;
 
 `;
-const Overview =styled.p`
+const Overview = styled.p`
 font-size:12px;
 opacity:0.7;
 line-height:1.5;
 width:50%;
 `;
+const Imdb = styled.a`
+  display: inline-block;
+  position: relative;
+  top:15px;
+  background-image: url(${props => props.src});
+  background-size: cover;
+  background-position: cover cover;
+  border-radius: 5px;
+  width: 35px;
+  height: 35px;
+  &:hover {
+    opacity: 0.7;
+  }
+`;
+
+const Youtube = styled.iframe`
+margin-top:20px;
+width:500px;
+height:300px;
+margin-bottom:5px;
+
+`;
+
+
+
+
 
 const DetailPresenter = ({ result, loading, error }) =>
   loading ? (
     <>
-    <Helmet>
-    <title>Search|Nomflix</title>
-  </Helmet>
-    <Loader />
+      <Helmet>
+        <title>Search|Nomflix</title>
+      </Helmet>
+      <Loader />
     </>
   ) : (
       <Container>
         <Helmet>
-    <title>{result.original_title  
-              ? result.original_title 
-              :result.original_name}Nomflix</title>
-  </Helmet>
+          <title>{result.original_title
+            ? result.original_title
+            : result.original_name}Nomflix</title>
+        </Helmet>
         <Backdrop
           bgImage={`https://image.tmdb.org/t/p/original${result.backdrop_path}`}
         />
@@ -94,45 +123,84 @@ const DetailPresenter = ({ result, loading, error }) =>
             }
           />
           <Data>
-            <Title>{result.original_title  
-              ? result.original_title 
-              :result.original_name}
-              </Title>
+            <Title>
+              {result.original_title
+                ? result.original_title
+                : result.original_name}
+            </Title>
             <ItemContainer>
               <Item>
-                {result.release_date  
-                  ?result.release_date.substring(0,4)  
-                  :result.first_air_date.substring(0,4) }
-             
-                  
+                {result.release_date
+                  ? result.release_date.substring(0, 4)
+                  : result.first_air_date.substring(0, 4)}
               </Item>
-              <Divider> • </Divider>
+              <Divider>•</Divider>
               <Item>
-                {result.runtime  
-                  ?result.runtime  
-                  :result.episode_run_time }min
-             
-                  
-              </Item>
-              <Divider> • </Divider>
+                {result.runtime ? result.runtime : result.episode_run_time[0]} min
+            </Item>
+              <Divider>•</Divider>
               <Item>
-                {result.genres && result.genres.map((genre,index)=>
-                index === result.genres.length -1
-                ? genre.name
-                : `${genre.name}/`
+                {result.genres &&
+                  result.genres.map((genre, index) =>
+                    index === result.genres.length - 1
+                      ? genre.name
+                      : `${genre.name} / `
                   )}
-             
-                  
+              </Item>
+
+              <br />
+              <Item>
+                {result.imdb_id ? (
+                  <>
+
+                    <Imdb
+                      src={result.imdb_id ? require("../../assets/imob.png") : ""}
+                      href={`https://www.imdb.com/title/${result.imdb_id}`}
+                      target={"_blank"}
+                    />
+                  </>
+                ) : (
+                    ""
+                  )}
+              </Item>
+              <br />
+              <Item>
+                {result.videos.results && result.videos.results.length > 0 ? (
+                  <Youtube
+
+                    src={`https://www.youtube.com/embed/${
+                      result.videos.results[0].key
+                      }`}
+
+
+                    allow=" fullscreen "
+                  />
+                ) : (
+                    ""
+                  )}
               </Item>
 
             </ItemContainer>
+
+
+            <Tabs>
+              <div label="1">
+                See ya later
+      </div>
+              <div label="2">
+                After 'while
+      </div>
+              <div label="3">
+                Nothing to see here
+      </div>
+            </Tabs>
+
             <Overview>{result.overview}</Overview>
+
           </Data>
         </Content>
-        
-            
       </Container>
-    )// backdrops 의 props 이름이 bgImage
+    );
 DetailPresenter.propTypes = {
   result: PropTypes.object,
   loading: PropTypes.bool.isRequired,
