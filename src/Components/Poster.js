@@ -31,7 +31,9 @@ const ImageContainer = styled.div`
     ${Image}{
         opacity:0.3
     }
-
+    ${Rating} {
+      opacity:1;
+    }
   }
 `;
 
@@ -48,43 +50,38 @@ const Year = styled.span`
   
 `;
 const Poster = ({ id, imageUrl, title, rating, year, isMovie = false }) =>
-    (
-        <Link to={isMovie ? `/movie/${id}` : `/show/${id}`}>
-            <Container>
+  (
+    <Link to={isMovie ? `/movie/${id}` : `/show/${id}`}>
+      <Container>
 
-                <ImageContainer>
-                <Image
-          bgUrl={
-            imageUrl
-              ? `https://image.tmdb.org/t/p/w300${imageUrl}`
-              : require("../assets/noPosterSmall.png")
-          }
-        />
-                    <Rating>
-                        <span role='img' aria-label='rating'>
-                            ⭐️
-                </span>{''}
-                        {rating}/10
-                </Rating>
-                </ImageContainer>
-                <Title>
-                    {title.length > 18 ? `${title.substring(0, 18)}...` : title}
-                </Title>
-                <Year >{year}</Year>
-            </Container>
-        </Link>
-    );
+        <ImageContainer>
+          <Image
+            bgUrl={
+              imageUrl
+                ? `https://image.tmdb.org/t/p/w300${imageUrl}`
+                : require("../assets/noPosterSmall.png")} />
+          <Rating>
+            <span role='img' aria-label='rating'>
+              ⭐️
+            </span>{''}
+            {rating}/10
+          </Rating>
+        </ImageContainer>
+        <Title>
+          {title.length > 18 ? `${title.substring(0, 18)}...` : title}
+        </Title>
+        <Year >{year}</Year>
+      </Container>
+    </Link>
+  );
 
 
 Poster.propTypes = {
-    id: PropTypes.number.isRequired,
-    imageUrl: PropTypes.string,
-    title: PropTypes.string.isRequired,
-    rating: PropTypes.number,
-    year: PropTypes.number,
-    isMovie: PropTypes.bool
-
-
-}
-
+  id: PropTypes.number.isRequired,
+  imageUrl: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  rating: PropTypes.number,
+  year: PropTypes.string,
+  isMovie: PropTypes.bool
+};
 export default Poster

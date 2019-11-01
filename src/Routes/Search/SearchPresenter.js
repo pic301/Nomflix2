@@ -60,6 +60,7 @@ const SearchPresenter = ({
              />
             ))}
           </Section>}
+          
         {tvResults && tvResults.length > 0 &&
           <Section title='Movie Results'>
             {tvResults.map(show => (

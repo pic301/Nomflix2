@@ -85,10 +85,15 @@ const Imdb = styled.a`
 `;
 
 const Youtube = styled.iframe`
-margin-top:20px;
+
 width:500px;
 height:300px;
-margin-bottom:5px;
+
+
+`;
+
+const YoutubeContainer = styled.div`
+
 
 `;
 
@@ -136,7 +141,9 @@ const DetailPresenter = ({ result, loading, error }) =>
               </Item>
               <Divider>•</Divider>
               <Item>
-                {result.runtime ? result.runtime : result.episode_run_time[0]} min
+              {result.release_date
+                ? result.runtime
+                : result.episode_run_time[0]}min
             </Item>
               <Divider>•</Divider>
               <Item>
@@ -163,11 +170,18 @@ const DetailPresenter = ({ result, loading, error }) =>
                     ""
                   )}
               </Item>
-              <br />
-              <Item>
+         
+            
+            </ItemContainer>
+
+
+            <Tabs>
+            <YoutubeContainer label="Youtube">
+           
+              
                 {result.videos.results && result.videos.results.length > 0 ? (
                   <Youtube
-
+ 
                     src={`https://www.youtube.com/embed/${
                       result.videos.results[0].key
                       }`}
@@ -178,25 +192,19 @@ const DetailPresenter = ({ result, loading, error }) =>
                 ) : (
                     ""
                   )}
-              </Item>
-
-            </ItemContainer>
-
-
-            <Tabs>
-              <div label="1">
-                See ya later
-      </div>
+              </YoutubeContainer>
+                
               <div label="2">
                 After 'while
       </div>
-              <div label="3">
-                Nothing to see here
+      <div label="3">
+              xcvxvfdv
       </div>
+                
             </Tabs>
 
             <Overview>{result.overview}</Overview>
-
+            
           </Data>
         </Content>
       </Container>
