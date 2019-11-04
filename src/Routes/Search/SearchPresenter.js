@@ -1,29 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import Helmet from 'react-helmet'
-import Loader from 'Components/Loader'
-import Section from 'Components/Section'
-import Message from "../../Components/Message"
-import Poster from "../../Components/Poster"
-
+import Loader from "Components/Loader";
+import Section from "Components/Section";
+import Message from "../../Components/Message";
+import Poster from "../../Components/Poster";
 
 const Container = styled.div`
-padding: 0px 20px;
+  padding: 20px;
 `;
-
 const Form = styled.form`
-margin-bottom:50px;
-width:100%;
+  margin-bottom: 50px;
 `;
 
 const Input = styled.input`
-all:unset;
-font-size: 28px;
-width:100%;
+  all: unset;
+  font-size: 28px;
+  width: 100%;
 `;
 
-//props로 추가하면 여기서써야겠지
 const SearchPresenter = ({
   movieResults,
   tvResults,
@@ -31,66 +26,79 @@ const SearchPresenter = ({
   searchTerm,
   handleSubmit,
   error,
-  updateTerm,
-}) => <Container>
-  <Helmet>
-    <title>Search|Nomflix</title>
-  </Helmet>
+  updateTerm
+}) => (
+
+  <Container>
     <Form onSubmit={handleSubmit}>
       <Input
-        placeholder='Search Movies or TV Show..'
+        placeholder="Search Movies TV Shows..."
         value={searchTerm}
-        onChange={updateTerm} />
+        onChange={updateTerm}
+      />
     </Form>
-    {loading ?
-      (<Loader />)
-      :
+    {loading ? (
+      
+      <Loader />
+    ) : (
       <>
-        {movieResults && movieResults.length > 0 &&
-          <Section title='Movie Results'>
+        {movieResults && movieResults.length > 0 && (
+          <Section title="Movie Results">
             {movieResults.map(movie => (
-             <Poster
-             key={movie.id} 
-             id={movie.id} 
-             imageUrl={movie.poster_path} 
-             title={movie.original_title} 
-             rating={movie.vote_average}
-             year={movie.release_date.substring(0,4)}
-             isMovie={true}
-             />
+              <Poster
+                key={movie.id}
+                id={movie.id}
+                imageUrl={movie.poster_path}
+                title={movie.title}
+                rating={movie.vote_average}
+                year={movie.release_date}
+                isMovie={true}
+              />
             ))}
-          </Section>}
-          
-        {tvResults && tvResults.length > 0 &&
-          <Section title='Movie Results'>
-            {tvResults.map(show => (
-              <span key={show.id}>{show.name} </span>
-            ))}
-          </Section>}
-        {error && <Message color="#e74c3c" text={error} />}
-        {tvResults && 
-        movieResults && 
-        tvResults.length === 0 && 
-        movieResults.length === 0 &&( 
-        <Message text='Nothing found' color='#95a5a6'/>
+          </Section>
         )}
-      </>}
+
+        {tvResults && tvResults.length > 0 && (
+          <Section title="TV show Results">
+            {tvResults.map(show => (
+              <Poster
+                key={show.id}
+                id={show.id}
+                imageUrl={show.poster_path}
+                title={show.name}
+                rating={show.vote_average}
+                year={show.first_air_date}
+              />
+            ))}
+          </Section>
+        )}
+      </>
+    )}
+    {error && <Message color="#e74c3c" text={error} />}
+    {tvResults &&
+      movieResults &&
+      tvResults.length === 0 &&
+      movieResults.length === 0 && (
+        <Message
+          color="#95a5a6"
+          text={`검색 결과가 없습니다  `}
+        />
+      )}
   </Container>
 //로더는 로딩이 멈췄을때 무비리절트로 갈꺼고 렝스의 길이가 0이상이면 섹션타이틀로가고
 
 
 
-
+);
 
 SearchPresenter.propTypes = {
   movieResults: PropTypes.array,
   tvResults: PropTypes.array,
-  error: PropTypes.string,
-  loading: PropTypes.bool.isRequired,
   searchTerm: PropTypes.string,
+  loading: PropTypes.bool.isRequired,
+  error: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
   updateTerm: PropTypes.func.isRequired
 };
 
 export default SearchPresenter;
-

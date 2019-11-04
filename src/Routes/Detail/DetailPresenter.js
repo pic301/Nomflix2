@@ -5,6 +5,9 @@ import Helmet from "react-helmet";
 import Loader from "Components/Loader";
 import Tabs from 'Components/Tabs';
 
+import { Link } from "react-router-dom";
+
+
 const Container = styled.div`
   height:calc(100vh - 50px);
   width:100%;
@@ -21,7 +24,7 @@ const Backdrop = styled.div`
   background-position: center center;
   background-size : cover ;
   filter: blur(3px);
-  opacity: 0.5;
+  opacity: 0.3;
 
   
 `;
@@ -97,6 +100,52 @@ const YoutubeContainer = styled.div`
 
 `;
 
+const ProductionCollection = styled.div`
+  display: inline-block;
+  text-align: center;
+  margin-left: 10px;
+`;
+
+const ProductionCollectionImg = styled.div`
+  width: 80px;
+  height: 100px;
+  background-image: url(${props => props.CollectionImg});
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  border-radius: 5px;
+`;
+const ProductionCollectionText = styled.div`
+  margin-top: 10px;
+  color: white;
+  opacity: 0.7;
+`;
+
+const CollectionContainer = styled.div`
+  display: inline-block;
+  text-align: center;
+`;
+
+const CollectionLogo = styled.div`
+  width: 80px;
+  height: 100px;
+  background-image: url(${props => props.CollectionImg});
+  background-position: center center;
+  background-size: cover;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  &:hover {
+    opacity: 0.5;
+  }
+`;
+
+const CollectionTitle = styled.div``;
+
+const Crator= styled.div`
+
+`;
+
 
 
 
@@ -136,14 +185,14 @@ const DetailPresenter = ({ result, loading, error }) =>
             <ItemContainer>
               <Item>
                 {result.release_date
-                  ? result.release_date.substring(0, 4)
-                  : result.first_air_date.substring(0, 4)}
+                  ? result.release_date
+                  : result.first_air_date}
               </Item>
               <Divider>•</Divider>
               <Item>
               {result.release_date
                 ? result.runtime
-                : result.episode_run_time[0]}min
+                : result.episode_run_time[0]}
             </Item>
               <Divider>•</Divider>
               <Item>
@@ -192,18 +241,83 @@ const DetailPresenter = ({ result, loading, error }) =>
                 ) : (
                     ""
                   )}
+
+            <Overview>{result.overview}</Overview>
+
+            {result.belongs_to_collection && (
+            <Link to={`/collections/${result.belongs_to_collection.id}`}>
+              <CollectionContainer>
+                <CollectionLogo
+                  CollectionImg={
+                    result.belongs_to_collection.poster_path
+                      ? `https://image.tmdb.org/t/p/w300${
+                          result.belongs_to_collection.poster_path
+                        }`
+                      : require("../../assets/noPosterSmall.png")
+                  }
+                />
+                <CollectionTitle>
+                  {result.belongs_to_collection.name}
+                </CollectionTitle>
+              </CollectionContainer>
+            </Link>
+          )}
+
+       {result.seasons && result.seasons.length > 0 
+         
+           ? result.seasons.map(season => (
+               <CollectionContainer>
+                 <CollectionLogo
+                   CollectionImg={
+                     season.poster_path
+                       ? `https://image.tmdb.org/t/p/w300${season.poster_path}`
+                       : require("../../assets/noPosterSmall.png")
+                   }
+                 />
+                 <CollectionTitle>{season.name}</CollectionTitle>
+               </CollectionContainer>
+             ))
+            
+           : ""}
+           
+           <Crator>
+           <br/>
+     {result.created_by&& result.created_by.length > 0
+              ? `Creators:${result.created_by[0].name}`
+              : ""}
+          </Crator>
               </YoutubeContainer>
                 
-              <div label="2">
-                After 'while
+              <div label="Production Company ">
+                
+          {result.production_companies && result.production_companies.length > 0
+            ? result.production_companies.map(production => (
+                <ProductionCollection key={production.id}>
+                  <ProductionCollectionImg
+                    CollectionImg={
+                      production.logo_path
+                        ? `https://image.tmdb.org/t/p/w300/${
+                            production.logo_path
+                          }`
+                        : require("../../assets/noPosterSmall.png")
+                    }
+                  />
+                  <ProductionCollectionText>
+                    {production.name}
+                  </ProductionCollectionText>
+                </ProductionCollection>
+              ))
+            : ""}
       </div>
-      <div label="3">
-              xcvxvfdv
+      <div label=" Production Countries">
+      {result.production_countries && result.production_companies.length > 0
+                ? result.production_countries[0].name
+                : result.origin_country}
       </div>
+      
                 
             </Tabs>
 
-            <Overview>{result.overview}</Overview>
             
           </Data>
         </Content>

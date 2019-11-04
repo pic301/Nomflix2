@@ -14,6 +14,8 @@ const Image = styled.div`
   border-radius: 4px;
   background-position: center center;
   transition: opacity 0.1s linear;
+
+  
 `;
 const Rating = styled.span`
   bottom: 5px;
@@ -76,12 +78,15 @@ const Poster = ({ id, imageUrl, title, rating, year, isMovie = false }) =>
   );
 
 
-Poster.propTypes = {
-  id: PropTypes.number.isRequired,
-  imageUrl: PropTypes.string,
-  title: PropTypes.string.isRequired,
-  rating: PropTypes.number,
-  year: PropTypes.string,
-  isMovie: PropTypes.bool
-};
+  Poster.propTypes = {
+    id: PropTypes.number.isRequired,
+    imageUrl: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    rating: PropTypes.number,
+    year: PropTypes.string,
+    isMovie: PropTypes.bool
+  };
+
+
+
 export default Poster

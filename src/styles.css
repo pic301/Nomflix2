@@ -1,3 +1,4 @@
+
 .tab-list {
     border-bottom: 1px solid #ccc;
     padding-left: 0;
@@ -19,5 +20,9 @@
     color: #e34e4e;
     border: solid #ccc;
     border-width: 1px 1px 0 1px;
-    border-bottom:3px solid #3498db
+    border-bottom:3px solid #3498db;
+    
+  }
+  .tab-content{
+    font-size:25px
   }

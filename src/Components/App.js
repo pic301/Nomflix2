@@ -15,13 +15,3 @@ class App extends Component {
 
 export default App;
 
-// const App = () =>{
-//   return (
-//           <>
-//             <Router />
-//             <GlobalStyles />
-//           </>
-//         );
-
-//   }
-// export default App;

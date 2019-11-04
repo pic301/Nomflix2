@@ -5,13 +5,15 @@ import Helmet from 'react-helmet'
 import Section from 'Components/Section'
 import Loader from '../../Components/Loader'
 import Message from '../../Components/Message'
-import Poster from "../..//Components/Poster";
+import Poster from "../../Components/Poster";
 
 const Container = styled.div`
 padding:  20px ;
 `;
 
-const HomePresenter = ({ nowPlaying, upcoming, popular, loading, error }) =>
+ 
+
+const HomePresenter = ({ nowPlaying, upcoming, popular,loading, error }) =>
  
     <>  
     <Helmet>
@@ -19,9 +21,16 @@ const HomePresenter = ({ nowPlaying, upcoming, popular, loading, error }) =>
       </Helmet>
        {loading ? (
     <Loader />
+    
   ) : (
+    <>
+    
+
+  
       <Container>
-      
+     
+            
+     
         {nowPlaying && nowPlaying.length > 0 &&
           <Section title="Now Playing">
             {nowPlaying.map(movie => (<Poster
@@ -66,7 +75,9 @@ const HomePresenter = ({ nowPlaying, upcoming, popular, loading, error }) =>
           </Section>}
         {error && <Message color="#e74c3c" text={error} />}
 
-      </Container>)}
+      </Container>
+      </>
+      )}
     </>
 
 HomePresenter.propTypes = {

@@ -31,7 +31,7 @@ export default class extends React.Component {
     let result=null;
     
        try{
-           if(isMovie){//=pathname.include('/movie/')
+           if(isMovie){
            
             ({data:result} =await moviesApi.movieDetail(parsedId));
                 
@@ -44,13 +44,13 @@ export default class extends React.Component {
            this.setState({error:"Can't find anything"})
 
        } finally{
-           this.setState({loading:false,result})//뭐가되든 펄스되고 리절트 선언하고
+           this.setState({loading:false,result})
        }
   }
   
 
 
-  render() {// 홈프레젠터로 가는 모든 스테이트 값을 렌더링할꺼야
+  render() {
 
     const { result, error, loading } = this.state;
     console.log(result)

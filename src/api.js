@@ -12,6 +12,7 @@ export const moviesApi = {
   nowPlaying: () => api.get("movie/now_playing"),
   upcoming: () => api.get("movie/upcoming"),
   popular: () => api.get("movie/popular"),
+
   movieDetail: id =>
     api.get(`movie/${id}`, {
       params: {
@@ -23,7 +24,10 @@ export const moviesApi = {
       params: {
         query: encodeURIComponent(term)
       }
-    })
+    }),
+    videos: id => api.get(`movie/${id}/videos`),
+    collections: id => api.get(`collection/${id}`)
+    
 };
 
 export const tvApi = {
@@ -41,5 +45,12 @@ export const tvApi = {
       params: {
         query: encodeURIComponent(term)
       }
-    })
+    }),
+    videos: id => api.get(`movie/${id}/videos`),
+
 };
+// export const CollectionApi = {
+//   collectionDetail: id => api.get(`collection/${id}`)
+
+// }
+
